@@ -28,12 +28,13 @@ const Form = styled.form`
   textarea,
   select {
     width: 100%;
+    box-sizing: border-box;
     padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid black;
     &:focus {
       outline: 0;
-      border-color: var(--red);
+      border-color: ${(props) => props.theme.red};
     }
   }
   button,
@@ -70,5 +71,7 @@ const Form = styled.form`
     }
   }
 `;
+
+Form.displayName = 'Form';
 
 export default Form;
