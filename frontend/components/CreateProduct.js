@@ -49,8 +49,6 @@ export default function CreateProduct() {
     }
   );
 
-  console.log(createProduct);
-
   return (
     <div>
       <Form

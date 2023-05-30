@@ -1,8 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function useForm(initial = {}) {
   // create a state object for our inputs
   const [inputs, setInputs] = useState(initial);
+  const initialValues = Object.values(initial).join('');
+
+  useEffect(() => {
+    // This function runs when the things we are watching change
+    setInputs(initial);
+    // Need to check for initial values to prevent infinite loop due to useState()
+  }, [initialValues]);
+
+  // {
+  // name: 'user'
+  // description: 'nice shoes'
+  // price: 1000
+  // }
 
   function handleChange(event) {
     let { value, name, type } = event.target;
