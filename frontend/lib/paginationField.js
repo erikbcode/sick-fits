@@ -15,8 +15,8 @@ export default function paginationField() {
       // Check if we have existing items
       const items = existing.slice(skip, skip + first).filter((x) => x); // Filter out undefined items
 
-      // If there are items and there aren't enough items to fill the page and we are on the last page, then send it
       if (items.length && items.length !== first && page === pages) {
+        // If there are items and there aren't enough items to fill the page and we are on the last page, then send it
         return items;
       }
 
@@ -25,8 +25,8 @@ export default function paginationField() {
         return false;
       }
 
-      // If there are items, just return them from the cache, and we don't need to go to the network
       if (items.length) {
+        // If there are items, just return them from the cache, and we don't need to go to the network
         console.log(
           `There are ${items.length} items in the cache! Sending them to apollo`
         );
@@ -45,8 +45,8 @@ export default function paginationField() {
       // This runs when the apollo client comes back from the network with our products
       console.log(`Merging items from the network ${incoming.length}`);
       const merged = existing ? existing.slice(0) : [];
-      for (let i = skip; i < skip + incoming.length; ++i) {
-        merged[i] = incoming[i - skip];
+      for (let i = 0; i < incoming.length; ++i) {
+        merged[i + skip] = incoming[i];
       }
       console.log(merged);
       // Finally we return the merged items from the cache,
