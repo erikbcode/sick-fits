@@ -5,10 +5,11 @@ import NavStyles from './styles/NavStyles';
 import { useUser, CURRENT_USER_QUERY } from './User';
 import Error from './ErrorMessage';
 import SignOut from './SignOut';
+import { useCart } from '../lib/cartState';
 
 function Nav() {
   const user = useUser();
-  console.log(user);
+  const { openCart } = useCart();
 
   return (
     <NavStyles>
@@ -19,6 +20,9 @@ function Nav() {
           <Link href="/orders">Orders</Link>
           <Link href="/account">Account</Link>
           <SignOut />
+          <button type="button" onClick={openCart}>
+            My Cart
+          </button>
         </>
       )}
       {!user && (
