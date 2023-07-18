@@ -3,15 +3,13 @@ import gql from 'graphql-tag';
 import Head from 'next/head';
 import styled from 'styled-components';
 import Link from 'next/link';
-import OrderStyles from '../components/styles/OrderStyles';
 import formatMoney from '../lib/formatMoney';
 import ErrorMessage from '../components/ErrorMessage';
-import { useUser } from '../components/User';
 import OrderItemStyles from '../components/styles/OrderItemStyles';
 
 const USER_ORDERS_QUERY = gql`
-  query USER_ORDERS_QUERY($userId: ID!) {
-    allOrders: allOrders(where: { user: { id: $userId } }) {
+  query USER_ORDERS_QUERY {
+    allOrders {
       id
       label
       total
@@ -43,16 +41,7 @@ const OrderUl = styled.div`
 `;
 
 function OrdersPage() {
-  const user = useUser();
-  if (!user) {
-    return <p>No user</p>;
-  }
-  console.log(user.id);
-  const { data, error, loading } = useQuery(USER_ORDERS_QUERY, {
-    variables: {
-      userId: user.id,
-    },
-  });
+  const { data, error, loading } = useQuery(USER_ORDERS_QUERY);
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -86,7 +75,7 @@ function OrdersPage() {
           const itemCount = countItemsInAnOrder(order);
           const productCount = order.items.length;
           return (
-            <OrderItemStyles>
+            <OrderItemStyles key={order.id}>
               <Link href={`/order/${order.id}`}>
                 <a>
                   <div className="order-meta">
