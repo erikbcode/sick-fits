@@ -6,7 +6,7 @@ import Form from './styles/Form';
 import DisplayError from './ErrorMessage';
 import { ALL_PRODUCTS_QUERY } from './Products';
 
-const CREATE_PRODUCT_MUTATION = gql`
+export const CREATE_PRODUCT_MUTATION = gql`
   mutation CREATE_PRODUCT_MUTATION(
     # Which variables are getting passed in, and what types are they?
     $name: String!
@@ -36,8 +36,8 @@ export default function CreateProduct() {
 
   const { inputs, handleChange, resetForm, clearForm } = useForm({
     image: '',
-    name: 'Nice shoes',
-    price: 1234,
+    name: '',
+    price: 0,
     description: '',
   });
 
@@ -54,7 +54,6 @@ export default function CreateProduct() {
       <Form
         onSubmit={async (e) => {
           e.preventDefault();
-          console.log(inputs);
           // submit the input fields to the backend
           const res = await createProduct();
           clearForm();
