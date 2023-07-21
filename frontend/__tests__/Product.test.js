@@ -25,4 +25,30 @@ describe('<Product />', () => {
     const span = container.querySelector('span');
     expect(span).toHaveTextContent('$50');
   });
+
+  it('renders and matches the snapshot', () => {
+    const { container, debug } = render(
+      <MockedProvider>
+        <CartStateProvider>
+          <Product product={product} />
+        </CartStateProvider>
+      </MockedProvider>
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it('renders the image properly', () => {
+    const { container, debug } = render(
+      <MockedProvider>
+        <CartStateProvider>
+          <Product product={product} />
+        </CartStateProvider>
+      </MockedProvider>
+    );
+    // grab the image
+    const img = screen.getByAltText(product.name);
+    expect(img).toBeInTheDocument();
+    const p = screen.getByText(product.description);
+    expect(p).toBeInTheDocument();
+  });
 });
